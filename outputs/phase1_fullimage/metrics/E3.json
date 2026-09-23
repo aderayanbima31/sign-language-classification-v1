@@ -1,0 +1,110 @@
+{
+  "experiment_id": "E3",
+  "feature_set": "hog+shape",
+  "model": "svm",
+  "classes": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "random_seed": 42,
+  "image_size": [
+    128,
+    128
+  ],
+  "train_size": 1526,
+  "validation_size": 328,
+  "test_size": 328,
+  "best_params": {
+    "model__C": 10,
+    "model__gamma": "scale"
+  },
+  "metrics": {
+    "accuracy": 0.9512195121951219,
+    "macro_f1": 0.9510148010112583,
+    "classification_report": {
+      "A": {
+        "precision": 0.984375,
+        "recall": 0.9545454545454546,
+        "f1-score": 0.9692307692307692,
+        "support": 66.0
+      },
+      "B": {
+        "precision": 0.9836065573770492,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.9448818897637795,
+        "support": 66.0
+      },
+      "C": {
+        "precision": 0.9354838709677419,
+        "recall": 0.90625,
+        "f1-score": 0.9206349206349206,
+        "support": 64.0
+      },
+      "D": {
+        "precision": 0.8904109589041096,
+        "recall": 0.9848484848484849,
+        "f1-score": 0.935251798561151,
+        "support": 66.0
+      },
+      "E": {
+        "precision": 0.9705882352941176,
+        "recall": 1.0,
+        "f1-score": 0.9850746268656716,
+        "support": 66.0
+      },
+      "accuracy": 0.9512195121951219,
+      "macro avg": {
+        "precision": 0.9528929245086036,
+        "recall": 0.9509469696969697,
+        "f1-score": 0.9510148010112583,
+        "support": 328.0
+      },
+      "weighted avg": {
+        "precision": 0.9529990772740967,
+        "recall": 0.9512195121951219,
+        "f1-score": 0.9512000441842848,
+        "support": 328.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        63,
+        1,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        60,
+        1,
+        4,
+        1
+      ],
+      [
+        1,
+        0,
+        58,
+        4,
+        1
+      ],
+      [
+        0,
+        0,
+        1,
+        65,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        66
+      ]
+    ]
+  }
+}

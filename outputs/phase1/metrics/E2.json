@@ -1,0 +1,107 @@
+{
+  "experiment_id": "E2",
+  "feature_set": "hog",
+  "model": "random_forest",
+  "classes": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "random_seed": 42,
+  "image_size": [
+    128,
+    128
+  ],
+  "train_size": 1526,
+  "validation_size": 328,
+  "test_size": 328,
+  "best_params": {},
+  "metrics": {
+    "accuracy": 0.975609756097561,
+    "macro_f1": 0.9756311722932789,
+    "classification_report": {
+      "A": {
+        "precision": 0.9848484848484849,
+        "recall": 0.9848484848484849,
+        "f1-score": 0.9848484848484849,
+        "support": 66.0
+      },
+      "B": {
+        "precision": 0.9841269841269841,
+        "recall": 0.9393939393939394,
+        "f1-score": 0.9612403100775194,
+        "support": 66.0
+      },
+      "C": {
+        "precision": 0.9846153846153847,
+        "recall": 1.0,
+        "f1-score": 0.9922480620155039,
+        "support": 64.0
+      },
+      "D": {
+        "precision": 0.984375,
+        "recall": 0.9545454545454546,
+        "f1-score": 0.9692307692307692,
+        "support": 66.0
+      },
+      "E": {
+        "precision": 0.9428571428571428,
+        "recall": 1.0,
+        "f1-score": 0.9705882352941176,
+        "support": 66.0
+      },
+      "accuracy": 0.975609756097561,
+      "macro avg": {
+        "precision": 0.9761645992895993,
+        "recall": 0.9757575757575758,
+        "f1-score": 0.9756311722932789,
+        "support": 328.0
+      },
+      "weighted avg": {
+        "precision": 0.9761130701107835,
+        "recall": 0.975609756097561,
+        "f1-score": 0.9755298497949728,
+        "support": 328.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        65,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        62,
+        0,
+        0,
+        4
+      ],
+      [
+        0,
+        0,
+        64,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        63,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        66
+      ]
+    ]
+  }
+}
