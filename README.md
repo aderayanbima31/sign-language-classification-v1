@@ -66,3 +66,15 @@ python -m src.train \
 ```
 
 This remains static letter classification, not full sign-language translation.
+
+## Live camera on the improvement branch
+
+The `improvement-use-live-camera` branch adds a YOLO hand detector before the cropped HOG + SVM classifier. See [docs/live_camera.md](docs/live_camera.md), or run:
+
+```bash
+python -m src.live_camera \
+  --detector outputs/live_camera/detector_training_v3/hand_detector/weights/best.pt \
+  --classifier outputs/phase1/models/best_model.joblib
+```
+
+Press `q` or Escape to close the camera window.

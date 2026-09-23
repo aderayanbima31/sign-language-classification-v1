@@ -1,0 +1,14 @@
+# Local Python and test caches
+__pycache__/
+.pytest_cache/
+.matplotlib-cache/
+
+# Local YOLO downloads, generated detector datasets, runs, and weights
+yolo26n.pt
+outputs/live_camera/
+
+# Local planning ledger/scratch workspace
+.superpowers/
+
+# macOS metadata
+.DS_Store
