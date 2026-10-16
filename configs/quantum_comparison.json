@@ -1,0 +1,156 @@
+{
+  "schema_version": "q0.1",
+  "benchmark_name": "BISINDO classical versus quantum comparison",
+  "purpose": "Compare the Phase 1 classical baseline with quantum-kernel classifiers under an identical dataset and evaluation contract.",
+  "dataset": {
+    "sign_system": "BISINDO",
+    "classes": ["A", "B", "C", "D", "E"],
+    "primary_benchmark": "yolo_cropped",
+    "source_partitions": ["train", "val"],
+    "image_extensions": [".jpg"],
+    "class_label_source": "parent_directory_name",
+    "sample_order": "lexicographic_dataset_relative_path",
+    "label_policy": {
+      "invalid_or_missing": "fallback_to_full_image",
+      "class_id": "ignored_parent_directory_is_authoritative",
+      "first_non_blank_row": "authoritative",
+      "multiple_rows": "ignored_after_first_non_blank_row",
+      "blank_file": "invalid_then_fallback_to_full_image",
+      "unreadable_label": "invalid_then_fallback_to_full_image",
+      "unreadable_image": "fail_run",
+      "minimum_fields": 5,
+      "numeric_fields": ["center_x", "center_y", "box_width", "box_height"],
+      "positive_dimensions": true,
+      "empty_clipped_box": "invalid_then_fallback_to_full_image"
+    }
+  },
+  "split": {
+    "unit": "image",
+    "strategy": "two_stage_stratified_split",
+    "random_seed": 42,
+    "train_fraction": 0.7,
+    "validation_fraction": 0.15,
+    "test_fraction": 0.15,
+    "first_stage": "combine source train and val samples, then stratify 85% train_validation and 15% test",
+    "second_stage": "stratify train_validation into 70% train and 15% validation of the full dataset; validation fraction within train_validation is 0.15 / 0.85",
+    "final_test_fit": "fit the selected model on train plus validation, then evaluate once on the locked test split",
+    "manifest_required": true
+  },
+  "preprocessing": {
+    "mode": "yolo_crop_with_margin",
+    "grayscale": true,
+    "image_size": [128, 128],
+    "crop_margin_fraction": 0.1,
+    "missing_or_invalid_label": "fallback_to_full_image",
+    "crop_margin_rounding": "integer_truncation",
+    "augmentation": "none"
+  },
+  "classical_baseline": {
+    "experiment_id": "phase1_e1_reproduced",
+    "feature_set": "hog",
+    "working_image_size": [64, 64],
+    "hog": {
+      "orientations": 9,
+      "pixels_per_cell": [8, 8],
+      "cells_per_block": [2, 2],
+      "block_norm": "L2-Hys"
+    },
+    "model": "rbf_svm",
+    "hyperparameter_selection": {
+      "scoring": "f1_macro",
+      "c_values": [0.1, 1, 10, 100],
+      "gamma_values": ["scale", 0.001, 0.01, 0.1],
+      "cross_validation": "stratified training-only folds, up to 5 folds"
+    }
+  },
+  "quantum_inputs": {
+    "source_features": "same_hog_as_classical_baseline",
+    "dimensionality_reduction": {
+      "method": "PCA",
+      "fit_scope": "training_split_only",
+      "whiten": false,
+      "solver": "full"
+    },
+    "angle_scaling": {
+      "method": "training_fitted_minmax",
+      "range_radians": [-3.141592653589793, 3.141592653589793],
+      "fit_scope": "training_split_only",
+      "clip_transformed_values": true
+    },
+    "qubit_counts": [4, 6, 8],
+    "encoding": "one_reduced_feature_per_qubit"
+  },
+  "quantum_models": {
+    "primary": "quantum_kernel",
+    "classifier": "multiclass_svc_with_quantum_kernel",
+    "feature_map": "shared_parameterized_angle_feature_map",
+    "vqc": {
+      "status": "out_of_scope_for_q0",
+      "planned_ticket": "Q11"
+    }
+  },
+  "simulator": {
+    "seed": 42,
+    "transpilation_optimization_level": 1,
+    "ideal": {
+      "enabled_by_default": true,
+      "backend": "local_statevector",
+      "shots": null,
+      "noise_model": null
+    },
+    "noisy": {
+      "enabled_by_default": false,
+      "backend": "local_shot_based_simulator",
+      "shots": 1024,
+      "noise_model": "explicitly_recorded_configurable_noise_model"
+    }
+  },
+  "evaluation": {
+    "primary_metric": "macro_f1",
+    "secondary_metrics": ["accuracy", "per_class_precision", "per_class_recall", "per_class_f1", "support"],
+    "confusion_matrix": true,
+    "report_validation_and_test": true,
+    "quantum_advantage_claim": "prohibited_without_statistically_supported_evidence"
+  },
+  "outputs": {
+    "root": "outputs/quantum_comparison",
+    "split_manifest": "outputs/quantum_comparison/split_manifest.json",
+    "classical": "outputs/quantum_comparison/classical",
+    "quantum_ideal": "outputs/quantum_comparison/quantum/ideal",
+    "quantum_noisy": "outputs/quantum_comparison/quantum/noisy",
+    "preprocessors": "outputs/quantum_comparison/preprocessors",
+    "reports": "outputs/quantum_comparison/reports",
+    "required_per_run_files": ["config.json", "metrics.json", "predictions.csv", "confusion_matrix.json"]
+  },
+  "protected_paths": [
+    "outputs/phase1",
+    "outputs/phase1_fullimage"
+  ],
+  "required_reporting_fields": [
+    "run_id",
+    "model_family",
+    "dataset_root_or_dataset_id",
+    "split_manifest_path",
+    "split_manifest_sha256",
+    "classes",
+    "preprocessing_mode",
+    "feature_set",
+    "feature_dimension",
+    "qubit_count",
+    "backend",
+    "shots",
+    "noise_model",
+    "circuit_depth",
+    "gate_count",
+    "random_seed",
+    "train_size",
+    "validation_size",
+    "test_size",
+    "fit_runtime_seconds",
+    "predict_runtime_seconds",
+    "accuracy",
+    "macro_f1",
+    "per_class_metrics",
+    "confusion_matrix"
+  ]
+}
