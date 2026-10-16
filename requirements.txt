@@ -8,3 +8,10 @@ scikit-learn>=1.3
 joblib>=1.3
 pytest>=7.4
 ultralytics>=8.3
+
+# Quantum-computing stack for Q0/Q1 local simulator experiments.
+# Requires Python 3.10+ and the Qiskit Machine Learning 0.9.x V2-primitives
+# stack, while leaving the Phase 1 classical stack intact.
+qiskit>=2.0,<3
+qiskit-aer>=0.17,<0.18
+qiskit-machine-learning>=0.9,<0.10
